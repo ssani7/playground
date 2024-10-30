@@ -37,7 +37,7 @@ const App: React.FC = () => {
 	];
 
 	const [levelIndex, setLevelIndex] = useState(6);
-	const [points, setPoints] = useState(22749365);
+	const [points, setPoints] = useState(0);
 	const [clicks, setClicks] = useState<{ id: number; x: number; y: number }[]>([]);
 	const pointsToAdd = 11;
 	const profitPerHour = 126420;
@@ -123,15 +123,31 @@ const App: React.FC = () => {
 		return `+${profit}`;
 	};
 
-	useEffect(() => {
-		const pointsPerSecond = Math.floor(profitPerHour / 3600);
-		const interval = setInterval(() => {
-			setPoints((prevPoints) => prevPoints + pointsPerSecond);
-		}, 1000);
-		return () => clearInterval(interval);
-	}, [profitPerHour]);
+	// useEffect(() => {
+	// 	const pointsPerSecond = Math.floor(profitPerHour / 3600);
+	// 	const interval = setInterval(() => {
+	// 		setPoints((prevPoints) => prevPoints + pointsPerSecond);
+	// 	}, 1000);
+	// 	return () => clearInterval(interval);
+	// }, [profitPerHour]);
+
+	const [userData, setUserData] = useState<IUser>();
+
+	interface IUser {
+		id: number;
+		first_name?: string;
+		last_name?: string;
+		username?: string;
+		is_premium?: boolean;
+	}
 
 	console.log(WebApp.initDataUnsafe.user);
+
+	useEffect(() => {
+		if (WebApp?.initDataUnsafe?.user) {
+			setUserData(WebApp.initDataUnsafe.user);
+		}
+	}, []);
 
 	return (
 		<div className="bg-black flex justify-center">
@@ -142,7 +158,9 @@ const App: React.FC = () => {
 							<Hamster size={24} className="text-[#d4d4d4]" />
 						</div>
 						<div>
-							<p className="text-sm">Zahid (CEO)</p>
+							<p className="text-sm">
+								{userData?.first_name} {userData?.last_name} ({userData?.username})
+							</p>
 						</div>
 					</div>
 					<div className="flex items-center justify-between space-x-4 mt-1">
