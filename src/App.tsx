@@ -159,7 +159,7 @@ const App: React.FC = () => {
 						</div>
 						<div>
 							<p className="text-sm">
-								{userData?.first_name} {userData?.last_name} ({userData?.username})
+								{userData?.first_name} ({userData?.username})
 							</p>
 						</div>
 					</div>
